@@ -1,0 +1,102 @@
+[
+  {
+    "name": "list_issues",
+    "description": "List issues",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "search_issues",
+    "description": "Search issues",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "issue_read",
+    "description": "Get issue details",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "issue_write",
+    "description": "Create or update issue/pull request",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "add_issue_comment",
+    "description": "Add comment to issue or pull request",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "list_discussions",
+    "description": "List discussions",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_discussion",
+    "description": "Get discussion",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "create_gist",
+    "description": "Create Gist",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "list_gists",
+    "description": "List Gists",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "actions_list",
+    "description": "List GitHub Actions workflows in a repository",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "actions_get",
+    "description": "Get details of GitHub Actions resources (workflows, workflow runs, jobs, and artifacts)",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_job_logs",
+    "description": "Get GitHub Actions workflow job logs",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "list_dependabot_alerts",
+    "description": "List dependabot alerts",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_dependabot_alert",
+    "description": "Get dependabot alert",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "list_code_scanning_alerts",
+    "description": "List code scanning alerts",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_code_scanning_alert",
+    "description": "Get code scanning alert",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_me",
+    "description": "Get my user profile",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_teams",
+    "description": "Get teams",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "get_label",
+    "description": "Get a specific label from a repository",
+    "source": "github/github-mcp-server"
+  },
+  {
+    "name": "search_code",
+    "description": "Search code",
+    "source": "github/github-mcp-server"
+  }
+]
