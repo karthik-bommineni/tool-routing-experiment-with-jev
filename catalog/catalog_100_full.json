@@ -1,0 +1,3548 @@
+[
+  {
+    "name": "list_issues",
+    "description": "List issues",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "after",
+        "type": "string",
+        "required": false,
+        "description": "Cursor for pagination. Use the cursor from the previous response."
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "required": false,
+        "description": "Order direction. If provided, the 'orderBy' also needs to be provided."
+      },
+      {
+        "name": "field_filters",
+        "type": "object[]",
+        "required": false,
+        "description": "Filter by custom issue field values. Each entry takes a field_name and a value; the server looks up the field and coerces the value to its type (single-select option name, text, number, or YYYY-MM-DD date)."
+      },
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each issue. If omitted, all fields are returned. Use this to reduce response size when you only need specific fields; omitting 'body' and 'field_values' in particular drops the largest per-result data."
+      },
+      {
+        "name": "labels",
+        "type": "string[]",
+        "required": false,
+        "description": "Filter by labels."
+      },
+      {
+        "name": "orderBy",
+        "type": "string",
+        "required": false,
+        "description": "Order issues by field. If provided, the 'direction' also needs to be provided."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      },
+      {
+        "name": "since",
+        "type": "string",
+        "required": false,
+        "description": "Filter by date (ISO 8601 timestamp)."
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "Filter by state, by default both open and closed issues are returned when not provided."
+      }
+    ]
+  },
+  {
+    "name": "search_issues",
+    "description": "Search issues",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each issue result. If omitted, all fields are returned. Use this to reduce response size when you only need specific fields; omitting 'body', 'reactions', and 'labels' in particular drops the largest per-result data."
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "required": false,
+        "description": "Sort order."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Optional repository owner. If provided with repo, only issues for this repository are listed."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "required": true,
+        "description": "The search query, as natural language. When the user gives alternative wordings, include them as plain words rather than joining them with OR."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Optional repository name. If provided with owner, only issues for this repository are listed."
+      },
+      {
+        "name": "sort",
+        "type": "string",
+        "required": false,
+        "description": "Sort field by number of matches of categories, defaults to best match."
+      }
+    ]
+  },
+  {
+    "name": "issue_read",
+    "description": "Get issue details",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "issue_number",
+        "type": "number",
+        "required": true,
+        "description": "The number of the issue."
+      },
+      {
+        "name": "method",
+        "type": "string",
+        "required": true,
+        "description": "The read operation to perform on a single issue. Options are: 1. get - Get issue details. Also returns best-effort hierarchy flags (has_parent, has_children); parent and sub_issues_summary are optional relationship summaries, and closed_by_pull_requests summarizes the pull requests configured to close the issue as total_count plus up to 5 references. 2. get_comments - Get issue comments. 3. get_sub_issues - Get sub-issues (children) of the issue. 4. get_parent - Get the parent issue, if this issue is a sub-issue of another. 5. get_labels - Get labels assigned to the issue."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      }
+    ]
+  },
+  {
+    "name": "issue_write",
+    "description": "Create or update issue/pull request",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "assignees",
+        "type": "string[]",
+        "required": false,
+        "description": "Usernames to assign to this issue."
+      },
+      {
+        "name": "body",
+        "type": "string",
+        "required": false,
+        "description": "Issue body content."
+      },
+      {
+        "name": "duplicate_of",
+        "type": "number",
+        "required": false,
+        "description": "Issue number that this issue is a duplicate of. Required when state_reason is 'duplicate'."
+      },
+      {
+        "name": "issue_fields",
+        "type": "object[]",
+        "required": false,
+        "description": "Issue field values to set or clear. Each item requires 'field_name' and exactly one of 'value', 'field_option_name', or 'delete: true'."
+      },
+      {
+        "name": "issue_number",
+        "type": "number",
+        "required": false,
+        "description": "Issue number to update."
+      },
+      {
+        "name": "labels",
+        "type": "string[]",
+        "required": false,
+        "description": "Labels to apply to this issue."
+      },
+      {
+        "name": "method",
+        "type": "string",
+        "required": true,
+        "description": "Write operation to perform on a single issue. Options are: 'create' - creates a new issue. 'update' - updates an existing issue."
+      },
+      {
+        "name": "milestone",
+        "type": "number",
+        "required": false,
+        "description": "Milestone number."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "parent_issue_number",
+        "type": "number",
+        "required": false,
+        "description": "Issue number of the parent issue. Only used when method is 'create' and cannot be combined with issue_fields. The new issue is created and attached to this parent in the same operation."
+      },
+      {
+        "name": "parent_owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner of the parent issue. Must be provided with parent_repo. Omit both to use owner and repo. Only used when method is 'create' and parent_issue_number is provided."
+      },
+      {
+        "name": "parent_repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name of the parent issue. Must be provided with parent_owner. Omit both to use owner and repo. Only used when method is 'create' and parent_issue_number is provided."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "New state."
+      },
+      {
+        "name": "state_reason",
+        "type": "string",
+        "required": false,
+        "description": "Reason for the state change. Ignored unless state is changed."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "description": "Issue title."
+      },
+      {
+        "name": "type",
+        "type": "string | null",
+        "required": false,
+        "description": "Type of this issue. For updates, pass null to remove the current type. Only use if issue types are enabled for this repository. Use list_issue_types to get valid type values for this repository or its owner organization. If the repository doesn't support issue types, omit this parameter."
+      }
+    ]
+  },
+  {
+    "name": "add_issue_comment",
+    "description": "Add comment to issue or pull request",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "body",
+        "type": "string",
+        "required": false,
+        "description": "Comment content. Required unless reaction is provided."
+      },
+      {
+        "name": "comment_id",
+        "type": "integer",
+        "required": false,
+        "description": "The numeric ID of the issue or pull request comment to react to. Use this for reactions to comments; omit it to react to the issue or pull request itself. Cannot be combined with body."
+      },
+      {
+        "name": "issue_number",
+        "type": "number",
+        "required": true,
+        "description": "Issue or pull request number to comment on or react to."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "reaction",
+        "type": "string",
+        "required": false,
+        "description": "Emoji reaction to add. Required unless body is provided."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      }
+    ]
+  },
+  {
+    "name": "list_discussions",
+    "description": "List discussions",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "after",
+        "type": "string",
+        "required": false,
+        "description": "Cursor for pagination. Use the cursor from the previous response."
+      },
+      {
+        "name": "category",
+        "type": "string",
+        "required": false,
+        "description": "Optional filter by discussion category ID. If provided, only discussions with this category are listed."
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "required": false,
+        "description": "Order direction."
+      },
+      {
+        "name": "orderBy",
+        "type": "string",
+        "required": false,
+        "description": "Order discussions by field. If provided, the 'direction' also needs to be provided."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. If not provided, discussions will be queried at the organisation level."
+      }
+    ]
+  },
+  {
+    "name": "get_discussion",
+    "description": "Get discussion",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "discussionNumber",
+        "type": "number",
+        "required": true,
+        "description": "Discussion Number."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      }
+    ]
+  },
+  {
+    "name": "create_gist",
+    "description": "Create Gist",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "gist"
+    ],
+    "inputs": [
+      {
+        "name": "content",
+        "type": "string",
+        "required": true,
+        "description": "Content for simple single-file gist creation."
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": "Description of the gist."
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "required": true,
+        "description": "Filename for simple single-file gist creation."
+      },
+      {
+        "name": "public",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the gist is public."
+      }
+    ]
+  },
+  {
+    "name": "list_gists",
+    "description": "List Gists",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "since",
+        "type": "string",
+        "required": false,
+        "description": "Only gists updated after this time (ISO 8601 timestamp)."
+      },
+      {
+        "name": "username",
+        "type": "string",
+        "required": false,
+        "description": "GitHub username (omit for authenticated user's gists)."
+      }
+    ]
+  },
+  {
+    "name": "actions_list",
+    "description": "List GitHub Actions workflows in a repository",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "method",
+        "type": "string",
+        "required": true,
+        "description": "The action to perform."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (default: 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (default: 30, max: 100)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      },
+      {
+        "name": "resource_id",
+        "type": "string",
+        "required": false,
+        "description": "The unique identifier of the resource. This will vary based on the method provided. Do not provide any resource ID for 'list_workflows'. Provide a workflow ID or workflow file name (e.g. ci.yaml) for 'list_workflow_runs', or omit to list all workflow runs in the repository. Provide a workflow run ID for 'list_workflow_jobs' and 'list_workflow_run_artifacts'."
+      },
+      {
+        "name": "workflow_jobs_filter",
+        "type": "object",
+        "required": false,
+        "description": "Filters for workflow jobs. ONLY used when method is 'list_workflow_jobs'."
+      },
+      {
+        "name": "workflow_runs_filter",
+        "type": "object",
+        "required": false,
+        "description": "Filters for workflow runs. ONLY used when method is 'list_workflow_runs'."
+      }
+    ]
+  },
+  {
+    "name": "actions_get",
+    "description": "Get details of GitHub Actions resources (workflows, workflow runs, jobs, and artifacts)",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "method",
+        "type": "string",
+        "required": true,
+        "description": "The method to execute."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      },
+      {
+        "name": "resource_id",
+        "type": "string",
+        "required": true,
+        "description": "The unique identifier of the resource. This will vary based on the method provided. Provide a workflow ID or workflow file name (e.g. ci.yaml) for 'get_workflow'. Provide a workflow run ID for 'get_workflow_run', 'get_workflow_run_usage', and 'get_workflow_run_logs_url'. Provide an artifact ID for 'download_workflow_run_artifact'. Provide a job ID for 'get_workflow_job'."
+      }
+    ]
+  },
+  {
+    "name": "get_job_logs",
+    "description": "Get GitHub Actions workflow job logs",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "failed_only",
+        "type": "boolean",
+        "required": false,
+        "description": "When true, gets logs for all failed jobs in the workflow run specified by run_id. Requires run_id to be provided."
+      },
+      {
+        "name": "job_id",
+        "type": "number",
+        "required": false,
+        "description": "The unique identifier of the workflow job. Required when getting logs for a single job."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      },
+      {
+        "name": "return_content",
+        "type": "boolean",
+        "required": false,
+        "description": "Returns actual log content instead of URLs."
+      },
+      {
+        "name": "run_id",
+        "type": "number",
+        "required": false,
+        "description": "The unique identifier of the workflow run. Required when failed_only is true to get logs for all failed jobs in the run."
+      },
+      {
+        "name": "tail_lines",
+        "type": "number",
+        "required": false,
+        "description": "Number of lines to return from the end of the log."
+      }
+    ]
+  },
+  {
+    "name": "list_dependabot_alerts",
+    "description": "List dependabot alerts",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "security_events"
+    ],
+    "inputs": [
+      {
+        "name": "after",
+        "type": "string",
+        "required": false,
+        "description": "Cursor for pagination. Use the cursor from the previous response."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      },
+      {
+        "name": "severity",
+        "type": "string",
+        "required": false,
+        "description": "Filter dependabot alerts by severity."
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "Filter dependabot alerts by state. Defaults to open."
+      }
+    ]
+  },
+  {
+    "name": "get_dependabot_alert",
+    "description": "Get dependabot alert",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "security_events"
+    ],
+    "inputs": [
+      {
+        "name": "alertNumber",
+        "type": "number",
+        "required": true,
+        "description": "The number of the alert."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      }
+    ]
+  },
+  {
+    "name": "list_code_scanning_alerts",
+    "description": "List code scanning alerts",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "security_events"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "ref",
+        "type": "string",
+        "required": false,
+        "description": "The Git reference for the results you want to list."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      },
+      {
+        "name": "severity",
+        "type": "string",
+        "required": false,
+        "description": "Filter code scanning alerts by severity."
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "Filter code scanning alerts by state. Defaults to open."
+      },
+      {
+        "name": "tool_name",
+        "type": "string",
+        "required": false,
+        "description": "The name of the tool used for code scanning."
+      }
+    ]
+  },
+  {
+    "name": "get_code_scanning_alert",
+    "description": "Get code scanning alert",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "security_events"
+    ],
+    "inputs": [
+      {
+        "name": "alertNumber",
+        "type": "number",
+        "required": true,
+        "description": "The number of the alert."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      }
+    ]
+  },
+  {
+    "name": "get_me",
+    "description": "Get my user profile",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "get_teams",
+    "description": "Get teams",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "read:org"
+    ],
+    "inputs": [
+      {
+        "name": "user",
+        "type": "string",
+        "required": false,
+        "description": "Username to get teams for. If not provided, uses the authenticated user."
+      }
+    ]
+  },
+  {
+    "name": "get_label",
+    "description": "Get a specific label from a repository",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Label name."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner (username or organization name)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name."
+      }
+    ]
+  },
+  {
+    "name": "search_code",
+    "description": "Search code",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each code search result. If omitted, all fields are returned. Use this to reduce response size when you only need specific fields; omitting 'repository' and 'text_matches' in particular drops the largest per-result data."
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "required": false,
+        "description": "Sort order for results."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)."
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)."
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "required": true,
+        "description": "Search query (GitHub code search REST). Implicit AND between terms; supports OR, NOT, and quoted phrases for exact match. Qualifiers: repo:owner/repo, org:, user:, language:, path:dir (prefix match), filename:exact.ext, extension:, in:file, in:path, size:, is:archived, is:fork. Max 256 chars. Examples: WithContext language:go org:github; \"package main\" repo:o/r; func extension:go path:cmd repo:o/r; NOT TODO language:go repo:o/r."
+      },
+      {
+        "name": "sort",
+        "type": "string",
+        "required": false,
+        "description": "Sort field ('indexed' only)."
+      }
+    ]
+  },
+  {
+    "name": "search_commits",
+    "description": "Search commits",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "order",
+        "type": "string",
+        "required": false,
+        "description": "Sort order"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "required": true,
+        "description": "Commit search query (GitHub commit search REST). Searches commit messages on the default branch only. Scope the search with `repo:owner/repo`, `org:`, or `user:` (queries without a scope qualifier match across all of GitHub and are usually not what you want). Other qualifiers: `author:`, `committer:`, `author-name:`, `committer-name:`, `author-email:`, `committer-email:`, `author-date:`, `committer-date:` (supports `>`, `<`, `>=`, `<=`, and `YYYY-MM-DD..YYYY-MM-DD` ranges), `merge:true|false`, `hash:`, `tree:`, `parent:`, `is:public`. Examples: `repo:owner/repo fix panic`; `org:github author:defunkt committer-date:>=2024-01-01`; `\"refactor cache\" repo:o/r`; `hash:abc1234 repo:o/r`."
+      },
+      {
+        "name": "sort",
+        "type": "string",
+        "required": false,
+        "description": "Sort by author or committer date (defaults to best match)"
+      }
+    ]
+  },
+  {
+    "name": "get_file_contents",
+    "description": "Get file or directory contents",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each entry when the path is a directory. If omitted, all fields are returned. Ignored when the path is a single file. Use this to reduce response size when listing directories and you only need specific fields, e.g. just 'name' and 'type'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner (username or organization)"
+      },
+      {
+        "name": "path",
+        "type": "string",
+        "required": false,
+        "description": "Path to file/directory"
+      },
+      {
+        "name": "ref",
+        "type": "string",
+        "required": false,
+        "description": "Accepts optional git refs such as `refs/tags/{tag}`, `refs/heads/{branch}` or `refs/pull/{pr_number}/head`"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "sha",
+        "type": "string",
+        "required": false,
+        "description": "Accepts optional commit SHA. If specified, it will be used instead of ref"
+      }
+    ]
+  },
+  {
+    "name": "list_commits",
+    "description": "List commits",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "author",
+        "type": "string",
+        "required": false,
+        "description": "Author username or email address to filter commits by"
+      },
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each commit. If omitted, all fields are returned. Use this to reduce response size when you only need specific fields, e.g. just 'sha' and 'html_url'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "path",
+        "type": "string",
+        "required": false,
+        "description": "Only commits containing this file path will be returned"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "sha",
+        "type": "string",
+        "required": false,
+        "description": "Commit SHA, branch or tag name to list commits of. If not provided, uses the default branch of the repository. If a commit SHA is provided, will list commits up to that SHA."
+      },
+      {
+        "name": "since",
+        "type": "string",
+        "required": false,
+        "description": "Only commits after this date will be returned (ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DD)"
+      },
+      {
+        "name": "until",
+        "type": "string",
+        "required": false,
+        "description": "Only commits before this date will be returned (ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DD)"
+      }
+    ]
+  },
+  {
+    "name": "get_commit",
+    "description": "Get commit details",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "detail",
+        "type": "string",
+        "required": false,
+        "description": "Level of detail to include for changed files. \"none\" omits stats and files entirely. \"stats\" (default) includes per-file metadata: filename, status, and lines-of-code counts (additions, deletions, changes), with no patch content. \"full_patch\" additionally includes the unified diff content for each file and can be very large."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "sha",
+        "type": "string",
+        "required": true,
+        "description": "Commit SHA, branch name, or tag name"
+      }
+    ]
+  },
+  {
+    "name": "list_pull_requests",
+    "description": "List pull requests",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "base",
+        "type": "string",
+        "required": false,
+        "description": "Filter by base branch"
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "required": false,
+        "description": "Sort direction"
+      },
+      {
+        "name": "fields",
+        "type": "string[]",
+        "required": false,
+        "description": "Subset of fields to return for each pull request. If omitted, all fields are returned. Use this to reduce response size when you only need specific fields; omitting 'body' in particular drops the largest per-result data."
+      },
+      {
+        "name": "head",
+        "type": "string",
+        "required": false,
+        "description": "Filter by head user/org and branch"
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "sort",
+        "type": "string",
+        "required": false,
+        "description": "Sort by"
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "Filter by state"
+      }
+    ]
+  },
+  {
+    "name": "pull_request_read",
+    "description": "Get details for a single pull request",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "after",
+        "type": "string",
+        "required": false,
+        "description": "Cursor for pagination, used only by the get_review_comments method. Pass the endCursor from the previous page's PageInfo to fetch the next page."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "pullNumber",
+        "type": "number",
+        "required": true,
+        "description": "Pull request number"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      }
+    ]
+  },
+  {
+    "name": "list_secret_scanning_alerts",
+    "description": "List secret scanning alerts",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "security_events"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      },
+      {
+        "name": "resolution",
+        "type": "string",
+        "required": false,
+        "description": "Filter by resolution"
+      },
+      {
+        "name": "secret_type",
+        "type": "string",
+        "required": false,
+        "description": "A comma-separated list of secret types to return. All default secret patterns are returned. To return generic patterns, pass the token name(s) in the parameter."
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "required": false,
+        "description": "Filter by state"
+      }
+    ]
+  },
+  {
+    "name": "Codex",
+    "description": "Installation guide for OpenAI Codex",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "Cursor",
+    "description": "Installation guide for Cursor IDE",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "OpenCode",
+    "description": "Installation guide for the OpenCode terminal agent",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "Windsurf",
+    "description": "Installation guide for Windsurf IDE",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "Zed",
+    "description": "Installation guide for Zed editor",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "actions_run_trigger",
+    "description": "Trigger GitHub Actions workflow actions",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "inputs",
+        "type": "object",
+        "required": false,
+        "description": "Inputs the workflow accepts. Only used for 'run_workflow' method."
+      },
+      {
+        "name": "method",
+        "type": "string",
+        "required": true,
+        "description": "The method to execute"
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "ref",
+        "type": "string",
+        "required": false,
+        "description": "The git reference for the workflow. The reference can be a branch or tag name. Required for 'run_workflow' method."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "run_id",
+        "type": "number",
+        "required": false,
+        "description": "The ID of the workflow run. Required for all methods except 'run_workflow'."
+      },
+      {
+        "name": "workflow_id",
+        "type": "string",
+        "required": false,
+        "description": "The workflow ID (numeric) or workflow file name (e.g., main.yml, ci.yaml). Required for 'run_workflow' method."
+      }
+    ]
+  },
+  {
+    "name": "get_code_quality_finding",
+    "description": "Get code quality finding",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "findingNumber",
+        "type": "number",
+        "required": true,
+        "description": "The number of the finding."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The owner of the repository."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "The name of the repository."
+      }
+    ]
+  },
+  {
+    "name": "get_team_members",
+    "description": "Get team members",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "read:org"
+    ],
+    "inputs": [
+      {
+        "name": "org",
+        "type": "string",
+        "required": true,
+        "description": "Organization login (owner) that contains the team."
+      },
+      {
+        "name": "team_slug",
+        "type": "string",
+        "required": true,
+        "description": "Team slug"
+      }
+    ]
+  },
+  {
+    "name": "assign_copilot_to_issue",
+    "description": "Assign Copilot to issue",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "base_ref",
+        "type": "string",
+        "required": false,
+        "description": "Git reference (e.g., branch) that the agent will start its work from. If not specified, defaults to the repository's default branch"
+      },
+      {
+        "name": "custom_instructions",
+        "type": "string",
+        "required": false,
+        "description": "Optional custom instructions to guide the agent beyond the issue body. Use this to provide additional context, constraints, or guidance that is not captured in the issue description"
+      },
+      {
+        "name": "issue_number",
+        "type": "number",
+        "required": true,
+        "description": "Issue number"
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      }
+    ]
+  },
+  {
+    "name": "request_copilot_review",
+    "description": "Request Copilot review",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "pullNumber",
+        "type": "number",
+        "required": true,
+        "description": "Pull request number"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      }
+    ]
+  },
+  {
+    "name": "assign_copilot_to_issue_with_intent",
+    "description": "Assign Copilot to issue with intent",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "base_ref",
+        "type": "string",
+        "required": false,
+        "description": "Git reference (e.g., branch) that the agent will start its work from. If not specified, defaults to the repository's default branch. Ignored when is_suggestion is true"
+      },
+      {
+        "name": "confidence",
+        "type": "string",
+        "required": true,
+        "description": "How confident you are in this choice. 'HIGH' for clear signal or explicit user request, 'MEDIUM' for reasonable inference with some ambiguity, 'LOW' for best guess with limited signal."
+      },
+      {
+        "name": "custom_instructions",
+        "type": "string",
+        "required": false,
+        "description": "Optional custom instructions to guide the agent beyond the issue body. Ignored when is_suggestion is true"
+      },
+      {
+        "name": "is_suggestion",
+        "type": "boolean",
+        "required": true,
+        "description": "If true, records a pending Copilot assignment intent rather than launching the agent. Approval later supplies the launch context; base_ref and custom_instructions are ignored in this case."
+      },
+      {
+        "name": "issue_number",
+        "type": "number",
+        "required": true,
+        "description": "Issue number"
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "rationale",
+        "type": "string",
+        "required": true,
+        "description": "One concise sentence explaining what specifically about the issue led to choosing Copilot. State the concrete signal (e.g. 'Well-scoped task with clear acceptance criteria')."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      }
+    ]
+  },
+  {
+    "name": "discussion_comment_write",
+    "description": "Manage discussion comments",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "body",
+        "type": "string",
+        "required": false,
+        "description": "Comment content (required for 'add', 'reply', and 'update' methods)"
+      },
+      {
+        "name": "commentNodeID",
+        "type": "string",
+        "required": false,
+        "description": "The Node ID of the discussion comment (required for 'reply', 'update', 'delete', 'mark_answer', and 'unmark_answer' methods). For 'reply', this is the top-level comment to reply to; GitHub Discussions only support one level of nesting."
+      },
+      {
+        "name": "discussionNumber",
+        "type": "number",
+        "required": false,
+        "description": "Discussion number (required for 'add' and 'reply' methods)"
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner (required for 'add' and 'reply' methods)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name (required for 'add' and 'reply' methods)"
+      }
+    ]
+  },
+  {
+    "name": "get_discussion_comments",
+    "description": "Get discussion comments",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "after",
+        "type": "string",
+        "required": false,
+        "description": "Cursor for pagination. Use the cursor from the previous response."
+      },
+      {
+        "name": "discussionNumber",
+        "type": "number",
+        "required": true,
+        "description": "Discussion Number"
+      },
+      {
+        "name": "includeReplies",
+        "type": "boolean",
+        "required": false,
+        "description": "When true, each top-level comment will include its replies nested within it (up to 100 replies per comment, which is the GitHub API maximum). Defaults to false."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      }
+    ]
+  },
+  {
+    "name": "list_discussion_categories",
+    "description": "List discussion categories",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. If not provided, discussion categories will be queried at the organisation level."
+      }
+    ]
+  },
+  {
+    "name": "get_gist",
+    "description": "Get Gist Content",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "gist_id",
+        "type": "string",
+        "required": true,
+        "description": "The ID of the gist"
+      }
+    ]
+  },
+  {
+    "name": "update_gist",
+    "description": "Update Gist",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "gist"
+    ],
+    "inputs": [
+      {
+        "name": "content",
+        "type": "string",
+        "required": true,
+        "description": "Content for the file"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": "Updated description of the gist"
+      },
+      {
+        "name": "filename",
+        "type": "string",
+        "required": true,
+        "description": "Filename to update or create"
+      },
+      {
+        "name": "gist_id",
+        "type": "string",
+        "required": true,
+        "description": "ID of the gist to update"
+      }
+    ]
+  },
+  {
+    "name": "get_repository_tree",
+    "description": "Get repository tree",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "Repository owner (username or organization)"
+      },
+      {
+        "name": "path_filter",
+        "type": "string",
+        "required": false,
+        "description": "Optional path prefix to filter the tree results (e.g., 'src/' to only show files in the src directory)"
+      },
+      {
+        "name": "recursive",
+        "type": "boolean",
+        "required": false,
+        "description": "Setting this parameter to true returns the objects or subtrees referenced by the tree. Default is false"
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": true,
+        "description": "Repository name"
+      },
+      {
+        "name": "tree_sha",
+        "type": "string",
+        "required": false,
+        "description": "The SHA1 value or ref (branch or tag) name of the tree. Defaults to the repository's default branch"
+      }
+    ]
+  },
+  {
+    "name": "create_repository_ruleset",
+    "description": "Create repository ruleset",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "admin:org",
+      "admin:enterprise"
+    ],
+    "inputs": [
+      {
+        "name": "bypass_actors",
+        "type": "object[]",
+        "required": false,
+        "description": "The actors that can bypass the rules in this ruleset"
+      },
+      {
+        "name": "conditions",
+        "type": "object",
+        "required": false,
+        "description": "Conditions for when this ruleset applies, e.g. {\"ref_name\": {\"include\": [\"refs/heads/main\"], \"exclude\": []}}"
+      },
+      {
+        "name": "enforcement",
+        "type": "string",
+        "required": true,
+        "description": "The enforcement level of the ruleset. 'evaluate' allows admins to test rules before enforcing them"
+      },
+      {
+        "name": "enterprise",
+        "type": "string",
+        "required": false,
+        "description": "Enterprise slug. Required when level is 'enterprise'."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the ruleset"
+      },
+      {
+        "name": "org",
+        "type": "string",
+        "required": false,
+        "description": "Organization name. Required when level is 'organization'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner. Required when level is 'repository'."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. Required when level is 'repository'."
+      },
+      {
+        "name": "rules",
+        "type": "object[]",
+        "required": true,
+        "description": "An array of rules within the ruleset. Each rule is an object with a 'type' (e.g. 'creation', 'deletion', 'non_fast_forward', 'required_signatures', 'pull_request', 'required_status_checks') and, for rules that need configuration, a 'parameters' object"
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "required": false,
+        "description": "The target of the ruleset. Defaults to 'branch'. 'repository' is only valid for 'organization' and 'enterprise' level rulesets."
+      }
+    ]
+  },
+  {
+    "name": "custom_properties_read",
+    "description": "Read custom properties",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "read:org",
+      "read:enterprise"
+    ],
+    "inputs": [
+      {
+        "name": "enterprise",
+        "type": "string",
+        "required": false,
+        "description": "Enterprise slug. Required when level is 'enterprise'."
+      },
+      {
+        "name": "org",
+        "type": "string",
+        "required": false,
+        "description": "Organization name. Required when level is 'organization'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner. Required when level is 'repository'."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. Required when level is 'repository'."
+      }
+    ]
+  },
+  {
+    "name": "custom_properties_write",
+    "description": "Set custom properties",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "admin:org",
+      "admin:enterprise"
+    ],
+    "inputs": [
+      {
+        "name": "enterprise",
+        "type": "string",
+        "required": false,
+        "description": "Enterprise slug. Required when level is 'enterprise'."
+      },
+      {
+        "name": "org",
+        "type": "string",
+        "required": false,
+        "description": "Organization name. Required when level is 'organization'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner. Required when level is 'repository'."
+      },
+      {
+        "name": "properties",
+        "type": "object[]",
+        "required": true,
+        "description": "The custom properties to create or update. At the repository level each item assigns a value ('property_name' and 'value'); at the organization and enterprise levels each item defines the schema ('property_name' and 'value_type', plus optional definition fields)."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. Required when level is 'repository'."
+      }
+    ]
+  },
+  {
+    "name": "repository_ruleset_read",
+    "description": "Read repository rulesets",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "read:org",
+      "read:enterprise"
+    ],
+    "inputs": [
+      {
+        "name": "actor_name",
+        "type": "string",
+        "required": false,
+        "description": "The handle for the GitHub user account to filter rule suites on. Used by the 'list_rule_suites' method."
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false,
+        "description": "Branch name. Required for the 'get_rules_for_branch' method."
+      },
+      {
+        "name": "enterprise",
+        "type": "string",
+        "required": false,
+        "description": "Enterprise slug. Required when level is 'enterprise'."
+      },
+      {
+        "name": "evaluate_status",
+        "type": "string",
+        "required": false,
+        "description": "Filter rule suites by ruleset evaluation mode. Used by the 'list_rule_suites' method."
+      },
+      {
+        "name": "includes_parents",
+        "type": "boolean",
+        "required": false,
+        "description": "Include rulesets configured at higher levels that also apply. Defaults to true. Used by the 'get' and 'list' methods at the repository level."
+      },
+      {
+        "name": "org",
+        "type": "string",
+        "required": false,
+        "description": "Organization name. Required when level is 'organization'."
+      },
+      {
+        "name": "owner",
+        "type": "string",
+        "required": false,
+        "description": "Repository owner. Required when level is 'repository'."
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "description": "Page number for pagination (min 1)"
+      },
+      {
+        "name": "perPage",
+        "type": "number",
+        "required": false,
+        "description": "Results per page for pagination (min 1, max 100)"
+      },
+      {
+        "name": "ref",
+        "type": "string",
+        "required": false,
+        "description": "The name of the ref (branch, tag, etc.) to filter rule suites by. Used by the 'list_rule_suites' method."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "Repository name. Required when level is 'repository'."
+      },
+      {
+        "name": "repository_name",
+        "type": "string",
+        "required": false,
+        "description": "Repository name to filter rule suites by. Used by the 'list_rule_suites' method at the organization level."
+      },
+      {
+        "name": "rule_suite_id",
+        "type": "number",
+        "required": false,
+        "description": "Rule suite ID. Required for the 'get_rule_suite' method."
+      },
+      {
+        "name": "rule_suite_result",
+        "type": "string",
+        "required": false,
+        "description": "The rule suite result to filter by. Used by the 'list_rule_suites' method."
+      },
+      {
+        "name": "ruleset_id",
+        "type": "number",
+        "required": false,
+        "description": "Ruleset ID. Required for the 'get' method."
+      },
+      {
+        "name": "time_period",
+        "type": "string",
+        "required": false,
+        "description": "The time period to filter rule suites by. Used by the 'list_rule_suites' method."
+      }
+    ]
+  },
+  {
+    "name": "list_issue_fields",
+    "description": "List issue fields",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "read:org"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The account owner of the repository or organization. The name is not case sensitive."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "The name of the repository. When provided, returns fields for this specific repository (inherited from its organization). When omitted, returns org-level fields directly."
+      }
+    ]
+  },
+  {
+    "name": "list_issue_types",
+    "description": "List available issue types",
+    "source": "github/github-mcp-server",
+    "oauth_scopes": [
+      "repo",
+      "read:org"
+    ],
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "string",
+        "required": true,
+        "description": "The account owner of the repository or organization."
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "required": false,
+        "description": "The name of the repository. When provided, returns issue types for this specific repository. When omitted, returns org-level issue types directly."
+      }
+    ]
+  },
+  {
+    "name": "pods_list",
+    "description": "List all the Kubernetes pods in the current cluster from all namespaces",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "fieldSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes field selector to filter pods by field values (e.g. 'status.phase=Running', 'spec.nodeName=node1'). Supported fields: metadata.name, metadata.namespace, spec.nodeName, spec.restartPolicy, spec.schedulerName, spec.serviceAccountName, status.phase (Pending/Running/Succeeded/Failed/Unknown), status.podIP, status.nominatedNodeName. Note: CrashLoopBackOff is a container state, not a pod phase, so it cannot be filtered directly. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+      },
+      {
+        "name": "labelSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes label selector (e.g. 'app=myapp,env=prod' or 'app in (myapp,yourapp)'), use this option when you want to filter the pods by label"
+      }
+    ]
+  },
+  {
+    "name": "pods_list_in_namespace",
+    "description": "List all the Kubernetes pods in the specified namespace in the current cluster",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "fieldSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes field selector to filter pods by field values (e.g. 'status.phase=Running', 'spec.nodeName=node1'). Supported fields: metadata.name, metadata.namespace, spec.nodeName, spec.restartPolicy, spec.schedulerName, spec.serviceAccountName, status.phase (Pending/Running/Succeeded/Failed/Unknown), status.podIP, status.nominatedNodeName. Note: CrashLoopBackOff is a container state, not a pod phase, so it cannot be filtered directly. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+      },
+      {
+        "name": "labelSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes label selector (e.g. 'app=myapp,env=prod' or 'app in (myapp,yourapp)'), use this option when you want to filter the pods by label"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Namespace to list pods from"
+      }
+    ]
+  },
+  {
+    "name": "pods_get",
+    "description": "Get a Kubernetes Pod in the current or provided namespace with the provided name",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pod"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to get the Pod from"
+      }
+    ]
+  },
+  {
+    "name": "pods_log",
+    "description": "Get the logs of a Kubernetes Pod in the current or provided namespace with the provided name",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "container",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Pod container to get the logs from (Optional)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pod to get the logs from"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to get the Pod logs from"
+      },
+      {
+        "name": "previous",
+        "type": "boolean",
+        "required": false,
+        "description": "Return previous terminated container logs (Optional)"
+      },
+      {
+        "name": "tail",
+        "type": "integer",
+        "required": false,
+        "description": "Number of lines to retrieve from the end of the logs (Optional, default: 100)"
+      }
+    ]
+  },
+  {
+    "name": "events_list",
+    "description": "List Kubernetes events (warnings, errors, state changes) for debugging and troubleshooting in the current cluster from all namespaces",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "fieldSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes field selector to filter events by field values (e.g. 'type=Warning', 'involvedObject.name=my-pod'). Supported fields: involvedObject.kind, involvedObject.name, involvedObject.namespace, involvedObject.uid, involvedObject.apiVersion, involvedObject.resourceVersion, involvedObject.fieldPath, reason, reportingComponent, source, type. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Optional Namespace to retrieve the events from. If not provided, will list events from all namespaces"
+      }
+    ]
+  },
+  {
+    "name": "namespaces_list",
+    "description": "List all the Kubernetes namespaces in the current cluster",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "fieldSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes field selector to filter namespaces by field values (e.g. 'metadata.name=default', 'status.phase=Active'). Supported fields: metadata.name, status.phase. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+      }
+    ]
+  },
+  {
+    "name": "resources_list",
+    "description": "List Kubernetes resources and objects in the current cluster by providing their apiVersion and kind and optionally the namespace and label selector (common apiVersion and kind include: v1 Pod, v1 Service, v1 Node, apps/v1 Deployment, networking.k8s.io/v1 Ingress, route.openshift.io/v1 Route)",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "apiVersion",
+        "type": "string",
+        "required": true,
+        "description": "apiVersion of the resources (examples of valid apiVersion are: v1, apps/v1, networking.k8s.io/v1)"
+      },
+      {
+        "name": "fieldSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes field selector to filter resources by field values (e.g. 'status.phase=Running', 'metadata.name=myresource'). Supported fields vary by resource type. For Pods: metadata.name, metadata.namespace, spec.nodeName, spec.restartPolicy, spec.schedulerName, spec.serviceAccountName, status.phase (Pending/Running/Succeeded/Failed/Unknown), status.podIP, status.nominatedNodeName. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": true,
+        "description": "kind of the resources (examples of valid kind are: Pod, Service, Deployment, Ingress)"
+      },
+      {
+        "name": "labelSelector",
+        "type": "string",
+        "required": false,
+        "description": "Optional Kubernetes label selector (e.g. 'app=myapp,env=prod' or 'app in (myapp,yourapp)'), use this option when you want to filter the resources by label"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Optional Namespace to retrieve the namespaced resources from (ignored in case of cluster scoped resources). If not provided, will list resources from all namespaces"
+      }
+    ]
+  },
+  {
+    "name": "resources_get",
+    "description": "Get a Kubernetes resource in the current cluster by providing its apiVersion, kind, optionally the namespace, and its name (common apiVersion and kind include: v1 Pod, v1 Service, v1 Node, apps/v1 Deployment, networking.k8s.io/v1 Ingress, route.openshift.io/v1 Route)",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "apiVersion",
+        "type": "string",
+        "required": true,
+        "description": "apiVersion of the resource (examples of valid apiVersion are: v1, apps/v1, networking.k8s.io/v1)"
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": true,
+        "description": "kind of the resource (examples of valid kind are: Pod, Service, Deployment, Ingress)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the resource"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Optional Namespace to retrieve the namespaced resource from (ignored in case of cluster scoped resources). If not provided, will get resource from configured namespace"
+      }
+    ]
+  },
+  {
+    "name": "configuration_contexts_list",
+    "description": "List all available context names and associated server urls from the kubeconfig file",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "targets_list",
+    "description": "List all available targets",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "configuration_view",
+    "description": "Get the current Kubernetes configuration content as a kubeconfig YAML",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "minified",
+        "type": "boolean",
+        "required": false,
+        "description": "Return a minified version of the configuration. If set to true, keeps only the current-context and the relevant pieces of the configuration for that context. If set to false, all contexts, clusters, auth-infos, and users are returned in the configuration. (Optional, default true)"
+      }
+    ]
+  },
+  {
+    "name": "projects_list",
+    "description": "List all the OpenShift projects in the current cluster",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "nodes_log",
+    "description": "Get logs from a Kubernetes node (kubelet, kube-proxy, or other system logs). This accesses node logs through the Kubernetes API proxy to the kubelet",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the node to get logs from"
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "required": true,
+        "description": "query specifies services(s) or files from which to return logs (required). Example: \"kubelet\" to fetch kubelet logs, \"/ \" to fetch a specific log file from the node (e.g., \"/var/log/kubelet.log\" or \"/var/log/kube-proxy.log\")"
+      },
+      {
+        "name": "tailLines",
+        "type": "integer",
+        "required": false,
+        "description": "Number of lines to retrieve from the end of the logs (Optional, 0 means all logs)"
+      }
+    ]
+  },
+  {
+    "name": "nodes_stats_summary",
+    "description": "Get detailed resource usage statistics from a Kubernetes node via the kubelet's Summary API. Provides comprehensive metrics including CPU, memory, filesystem, and network usage at the node, pod, and container levels. On systems with cgroup v2 and kernel 4.20+, also includes PSI (Pressure Stall Information) metrics that show resource pressure for CPU, memory, and I/O. See https://kubernetes.io/docs/reference/instrumentation/understand-psi-metrics/ for details on PSI metrics",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the node to get stats from"
+      }
+    ]
+  },
+  {
+    "name": "nodes_top",
+    "description": "List the resource consumption (CPU and memory) as recorded by the Kubernetes Metrics Server for the specified Kubernetes Nodes or all nodes in the cluster",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "label_selector",
+        "type": "string",
+        "required": false,
+        "description": "Kubernetes label selector (e.g. 'node-role.kubernetes.io/worker=') to filter nodes by label (Optional, only applicable when name is not provided)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Node to get the resource consumption from (Optional, all Nodes if not provided)"
+      }
+    ]
+  },
+  {
+    "name": "pods_delete",
+    "description": "Delete a Kubernetes Pod in the current or provided namespace with the provided name",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pod to delete"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to delete the Pod from"
+      }
+    ]
+  },
+  {
+    "name": "pods_top",
+    "description": "List the resource consumption (CPU and memory) as recorded by the Kubernetes Metrics Server for the specified Kubernetes Pods in the all namespaces, the provided namespace, or the current namespace",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "all_namespaces",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, list the resource consumption for all Pods in all namespaces. If false, list the resource consumption for Pods in the provided namespace or the current namespace"
+      },
+      {
+        "name": "label_selector",
+        "type": "string",
+        "required": false,
+        "description": "Kubernetes label selector (e.g. 'app=myapp,env=prod' or 'app in (myapp,yourapp)'), use this option when you want to filter the pods by label (Optional, only applicable when name is not provided)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Pod to get the resource consumption from (Optional, all Pods in the namespace if not provided)"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to get the Pods resource consumption from (Optional, current namespace if not provided and all_namespaces is false)"
+      }
+    ]
+  },
+  {
+    "name": "pods_exec",
+    "description": "Execute a command in a Kubernetes Pod (shell access, run commands in container) in the current or provided namespace with the provided name and command",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "command",
+        "type": "array",
+        "required": true,
+        "description": "Command to execute in the Pod container. The first item is the command to be run, and the rest are the arguments to that command. Example: [\"ls\", \"-l\", \"/tmp\"]"
+      },
+      {
+        "name": "container",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Pod container where the command will be executed (Optional)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pod where the command will be executed"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace of the Pod where the command will be executed"
+      }
+    ]
+  },
+  {
+    "name": "pods_run",
+    "description": "Run a Kubernetes Pod in the current or provided namespace with the provided container image and optional name",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "image",
+        "type": "string",
+        "required": true,
+        "description": "Container Image to run in the Pod"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Pod (Optional, random name if not provided)"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to run the Pod in"
+      },
+      {
+        "name": "port",
+        "type": "number",
+        "required": false,
+        "description": "TCP/IP port to expose from the Pod container (Optional, no port exposed if not provided)"
+      }
+    ]
+  },
+  {
+    "name": "resources_create_or_update",
+    "description": "Create or update a Kubernetes resource via Server-Side Apply. The manifest is the complete desired state: any field this tool previously set and the new manifest omits is removed. To edit an existing resource, fetch it with resources_get, modify it, then re-apply the full resource. (common apiVersion and kind include: v1 Pod, v1 Service, v1 Node, apps/v1 Deployment, networking.k8s.io/v1 Ingress, route.openshift.io/v1 Route)",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "resource",
+        "type": "string",
+        "required": true,
+        "description": "Complete YAML or JSON representation of the Kubernetes resource (full desired state, not a partial patch). Include apiVersion, kind, metadata, and the full spec."
+      }
+    ]
+  },
+  {
+    "name": "resources_delete",
+    "description": "Delete a Kubernetes resource in the current cluster by providing its apiVersion, kind, optionally the namespace, and its name (common apiVersion and kind include: v1 Pod, v1 Service, v1 Node, apps/v1 Deployment, networking.k8s.io/v1 Ingress, route.openshift.io/v1 Route)",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "apiVersion",
+        "type": "string",
+        "required": true,
+        "description": "apiVersion of the resource (examples of valid apiVersion are: v1, apps/v1, networking.k8s.io/v1)"
+      },
+      {
+        "name": "gracePeriodSeconds",
+        "type": "integer",
+        "required": false,
+        "description": "Optional duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used"
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": true,
+        "description": "kind of the resource (examples of valid kind are: Pod, Service, Deployment, Ingress)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the resource"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Optional Namespace to delete the namespaced resource from (ignored in case of cluster scoped resources). If not provided, will delete resource from configured namespace"
+      }
+    ]
+  },
+  {
+    "name": "resources_scale",
+    "description": "Get or update the scale of a Kubernetes resource in the current cluster by providing its apiVersion, kind, name, and optionally the namespace. If the scale is set in the tool call, the scale will be updated to that value. Always returns the current scale of the resource",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "apiVersion",
+        "type": "string",
+        "required": true,
+        "description": "apiVersion of the resource (examples of valid apiVersion are apps/v1)"
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": true,
+        "description": "kind of the resource (examples of valid kind are: StatefulSet, Deployment)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the resource"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Optional Namespace to get/update the namespaced resource scale from (ignored in case of cluster scoped resources). If not provided, will get/update resource scale from configured namespace"
+      },
+      {
+        "name": "scale",
+        "type": "integer",
+        "required": false,
+        "description": "Optional scale to update the resources scale to. If not provided, will return the current scale of the resource, and not update it"
+      }
+    ]
+  },
+  {
+    "name": "helm_install",
+    "description": "Install (deploy) a Helm chart to create a release in the current or provided namespace",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "chart",
+        "type": "string",
+        "required": true,
+        "description": "Chart reference to install (for example: stable/grafana, oci://ghcr.io/nginxinc/charts/nginx-ingress)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Helm release (Optional, random name if not provided)"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to install the Helm chart in (Optional, current namespace if not provided)"
+      },
+      {
+        "name": "values",
+        "type": "object",
+        "required": false,
+        "description": "Values to pass to the Helm chart (Optional)"
+      }
+    ]
+  },
+  {
+    "name": "helm_list",
+    "description": "List all the Helm releases in the current or provided namespace (or in all namespaces if specified)",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "all_namespaces",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, lists all Helm releases in all namespaces ignoring the namespace argument (Optional)"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to list Helm releases from (Optional, all namespaces if not provided)"
+      }
+    ]
+  },
+  {
+    "name": "helm_uninstall",
+    "description": "Uninstall a Helm release in the current or provided namespace",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Helm release to uninstall"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace to uninstall the Helm release from (Optional, current namespace if not provided)"
+      }
+    ]
+  },
+  {
+    "name": "kcp_workspaces_list",
+    "description": "List all available kcp workspaces in the current cluster",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "kcp_workspace_describe",
+    "description": "Get detailed information about a specific kcp workspace",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "workspace",
+        "type": "string",
+        "required": true,
+        "description": "Name or path of the workspace to describe"
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_mesh_traffic_graph",
+    "description": "Returns service-to-service traffic topology, dependencies, and network metrics (throughput, response time, mTLS) for the specified namespaces. Use this to diagnose routing issues, latency, or find upstream/downstream dependencies.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "graphType",
+        "type": "string",
+        "required": false,
+        "description": "Granularity of the graph. 'app' aggregates by app name, 'versionedApp' separates by versions, 'workload' maps specific pods/deployments. Default: versionedApp."
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespaces",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated list of namespaces to map"
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_mesh_status",
+    "description": "Retrieves the high-level health, topology, and environment details of the Istio service mesh. Returns multi-cluster control plane status (istiod), data plane namespace health (including ambient mesh status), observability stack health (Prometheus, Grafana...), and component connectivity. Use this tool as the first step to diagnose mesh-wide issues, verify Istio/Kiali versions, or check overall health before drilling into specific workloads.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "kiali_manage_istio_config_read",
+    "description": "Read Istio, Gateway API, and Inference API config. 'list' groups by namespace\u2192'group/version/kind'\u2192{valid:[...],invalid:[...]} where valid/invalid arrays contain resource names; omit group/kind to retrieve ALL config types in a single call. Supports Istio (networking.istio.io, security.istio.io), Gateway API (gateway.networking.k8s.io), and Inference API (inference.networking.k8s.io) when installed. 'get' returns full YAML. For writes use manage_istio_config.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "description": "Action to perform (read-only)"
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "required": false,
+        "description": "API group of the Istio object. Required ONLY for 'get' action. For 'list', OMIT group and kind to retrieve ALL config types in a single call. Use 'gateway.networking.k8s.io' for Gateway API resources. Use 'inference.networking.k8s.io' for Inference API resources."
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": false,
+        "description": "Kind of the Istio object. Required ONLY for 'get' action. For 'list', OMIT to return all kinds at once \u2014 do NOT call separately for each kind."
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace containing the Istio object. For 'list', if not provided, returns objects across all namespaces. For 'get', required."
+      },
+      {
+        "name": "object",
+        "type": "string",
+        "required": false,
+        "description": "Name of the Istio object. Required for 'get' action."
+      },
+      {
+        "name": "serviceName",
+        "type": "string",
+        "required": false,
+        "description": "Filter Istio configurations (VirtualServices, DestinationRules, and their referenced Gateways) that affect a specific service. Only applicable for 'list' action"
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": false,
+        "description": "API version. Use 'v1' for all resource types. Required for 'get' action."
+      }
+    ]
+  },
+  {
+    "name": "kiali_manage_istio_config",
+    "description": "Create, patch, or delete Istio, Gateway API, and Inference API config. Supports Istio resources (networking.istio.io, security.istio.io), Gateway API resources (gateway.networking.k8s.io), and Inference API resources (inference.networking.k8s.io) when installed on the cluster. For list and get (read-only) use manage_istio_config_read.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "description": "Action to perform (write)"
+      },
+      {
+        "name": "data",
+        "type": "string",
+        "required": false,
+        "description": "JSON or YAML data for the resource. Required for create and patch actions. For create, you can provide partial content (e.g. only spec) and it will be merged onto a valid template with defaults. Arrays (like servers, http, etc.) are REPLACED entirely, so include ALL elements you want."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "required": true,
+        "description": "API group of the Istio object. Use 'gateway.networking.k8s.io' for Gateway API resources. Use 'inference.networking.k8s.io' for Inference API resources."
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "required": true,
+        "description": "Kind of the Istio object (e.g., 'VirtualService', 'DestinationRule')."
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Namespace containing the Istio object."
+      },
+      {
+        "name": "object",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Istio object."
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": true,
+        "description": "API version. Use 'v1' for all resource types."
+      }
+    ]
+  },
+  {
+    "name": "kiali_list_mesh_clusters",
+    "description": "Returns the list of Istio mesh clusters that Kiali can access. Each entry includes its name and whether it is the home cluster (where Kiali is deployed). Call this tool before using meshCluster on other Kiali tools when the target cluster is unknown.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": []
+  },
+  {
+    "name": "kiali_get_resource_details",
+    "description": "Fetches a list of resources OR retrieves detailed data for a specific resource. If 'resourceName' is omitted, it returns a list. If 'resourceName' is provided, it returns details for that specific resource.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespaces",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated list of namespaces to query (e.g., 'bookinfo' or 'bookinfo,default'). If not provided, it will query across all accessible namespaces."
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "required": false,
+        "description": "Optional. The specific name of the resource. If left empty, the tool returns a list of all resources of the specified type. If provided, the tool returns deep details for this specific resource."
+      },
+      {
+        "name": "resourceType",
+        "type": "string",
+        "required": true,
+        "description": "The type of resource to query. Use 'app' for Kiali applications (grouped by the Kubernetes 'app' label). Use 'argoapp' for ArgoCD Application CRDs (requires ArgoCD installed and the Kiali service account must have read permissions on applications.argoproj.io)."
+      }
+    ]
+  },
+  {
+    "name": "kiali_list_traces",
+    "description": "Lists distributed traces for a service in a namespace. Returns a summary (namespace, service, total_found, avg_duration_ms) and a list of traces with id, duration_ms, spans_count, root_op, slowest_service, has_errors. Use get_trace_details with a trace id to get full hierarchy.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "errorOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, only consider traces that contain errors. Default false."
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of traces to return. Default 10."
+      },
+      {
+        "name": "lookbackSeconds",
+        "type": "integer",
+        "required": false,
+        "description": "How far back to search. Default 600 (10m)."
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Kubernetes namespace of the service."
+      },
+      {
+        "name": "serviceName",
+        "type": "string",
+        "required": true,
+        "description": "Service name to search traces for (required). Returns multiple traces up to limit."
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_trace_details",
+    "description": "Fetches a single distributed trace by trace_id and returns its call hierarchy (service tree with duration, status, and nested calls). Use this after list_traces to drill into a specific trace.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "traceId",
+        "type": "string",
+        "required": true,
+        "description": "Trace ID to fetch and summarize. If provided, namespace/service_name are ignored."
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_pod_performance",
+    "description": "Returns a human-readable text summary with current Pod CPU/memory usage (from Prometheus) compared to Kubernetes requests/limits (from the Pod spec). Useful to answer questions like 'Is this workload using too much memory?'",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Kubernetes namespace of the Pod."
+      },
+      {
+        "name": "podName",
+        "type": "string",
+        "required": false,
+        "description": "Kubernetes Pod name. If workloadName is provided, the tool will attempt to resolve a Pod from that workload first."
+      },
+      {
+        "name": "queryTime",
+        "type": "string",
+        "required": false,
+        "description": "Optional end timestamp (RFC3339) for the query. Defaults to now."
+      },
+      {
+        "name": "timeRange",
+        "type": "string",
+        "required": false,
+        "description": "Time window used to compute CPU rate (Prometheus duration like '5m', '10m', '1h', '1d'). Defaults to '10m'."
+      },
+      {
+        "name": "workloadName",
+        "type": "string",
+        "required": false,
+        "description": "Kubernetes Workload name (e.g. Deployment/StatefulSet/etc). Tool will look up the workload and pick one of its Pods. If not found, it will fall back to treating this value as a podName."
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_logs",
+    "description": "Get the logs of a Kubernetes Pod (or workload name that will be resolved to a pod) in a namespace. Output is plain text, matching kubernetes-mcp-server pods_log. The line_count field tells you the total number of log lines returned. Analyze ALL of them, but summarize the results unless the user explicitly asks for the raw output. Do not omit any error or warning lines.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "container",
+        "type": "string",
+        "required": false,
+        "description": "Optional. Name of the Pod container to get the logs from."
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "required": false,
+        "description": "Output formatting for chat. 'codeblock' wraps logs in ~~~ fences (recommended). 'plain' returns raw text like kubernetes-mcp-server pods_log."
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pod to get the logs from. If it does not exist, it will be treated as a workload name and a running pod will be selected."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Namespace to get the Pod logs from"
+      },
+      {
+        "name": "previous",
+        "type": "boolean",
+        "required": false,
+        "description": "Optional. Return previous terminated container logs"
+      },
+      {
+        "name": "severity",
+        "type": "string",
+        "required": false,
+        "description": "Optional severity filter applied client-side. Accepts 'ERROR', 'WARN' or combinations like 'ERROR,WARN'."
+      },
+      {
+        "name": "tail",
+        "type": "integer",
+        "required": false,
+        "description": "Number of lines to retrieve from the end of the logs (Optional, defaults to 50). Cannot exceed 200 lines."
+      },
+      {
+        "name": "workload",
+        "type": "string",
+        "required": false,
+        "description": "Optional. Workload name override (used when name lookup fails)."
+      }
+    ]
+  },
+  {
+    "name": "kiali_get_metrics",
+    "description": "Returns a compact JSON summary of Istio metrics (latency quantiles, traffic trends, throughput, payload sizes) for the given resource.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "byLabels",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated list of labels to group metrics by (e.g., 'source_workload,destination_service'). Optional"
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "required": false,
+        "description": "Traffic direction. Optional, defaults to 'outbound'"
+      },
+      {
+        "name": "meshCluster",
+        "type": "string",
+        "required": false,
+        "description": "Optional Istio mesh cluster name from kiali_list_mesh_clusters (e.g. west). When omitted, Kiali defaults to its home cluster."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "Namespace to get metrics from"
+      },
+      {
+        "name": "quantiles",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated list of quantiles for histogram metrics (e.g., '0.5,0.95,0.99'). Optional"
+      },
+      {
+        "name": "rateInterval",
+        "type": "string",
+        "required": false,
+        "description": "Rate interval for metrics (e.g., '1m', '5m'). Optional, defaults to '10m'"
+      },
+      {
+        "name": "reporter",
+        "type": "string",
+        "required": false,
+        "description": "Metrics reporter(s). Comma-separated list of: 'source', 'destination', 'waypoint', or the special value 'both' (no reporter filter). Optional, defaults to 'source'. Example: 'source,waypoint'"
+      },
+      {
+        "name": "requestProtocol",
+        "type": "string",
+        "required": false,
+        "description": "Filter by request protocol (e.g., 'http', 'grpc', 'tcp'). Optional"
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the resource to get metrics for"
+      },
+      {
+        "name": "resourceType",
+        "type": "string",
+        "required": true,
+        "description": "Type of resource to get metrics"
+      },
+      {
+        "name": "step",
+        "type": "string",
+        "required": false,
+        "description": "Step between data points in seconds (e.g., '15'). Optional, defaults to 15 seconds"
+      }
+    ]
+  },
+  {
+    "name": "vm_clone",
+    "description": "Clone a VirtualMachine on KubeVirt by creating a VirtualMachineClone resource. This creates a copy of the source VM with a new name using the KubeVirt Clone API",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the source virtual machine to clone"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace of the source virtual machine"
+      },
+      {
+        "name": "targetName",
+        "type": "string",
+        "required": true,
+        "description": "The name for the new cloned virtual machine"
+      }
+    ]
+  },
+  {
+    "name": "vm_create",
+    "description": "Create a VirtualMachine on KubeVirt with the specified configuration, automatically resolving instance types, preferences, and container disk images. VM will be created in Halted state by default; use autostart parameter to start it immediately.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "autostart",
+        "type": "boolean",
+        "required": false,
+        "description": "Optional flag to automatically start the VM after creation (sets runStrategy to Always instead of Halted). Defaults to false."
+      },
+      {
+        "name": "instancetype",
+        "type": "string",
+        "required": false,
+        "description": "Optional instance type name for the VM (e.g., 'u1.small', 'u1.medium', 'u1.large')"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the virtual machine"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace for the virtual machine"
+      },
+      {
+        "name": "networks",
+        "type": "array",
+        "required": false,
+        "description": "Optional secondary network interfaces to attach to the VM. Each item specifies a Multus NetworkAttachmentDefinition to attach. Accepts either simple strings (NetworkAttachmentDefinition names) or objects with 'name' (interface name in VM) and 'networkName' (NetworkAttachmentDefinition name) properties. Each network creates a bridge interface on the VM."
+      },
+      {
+        "name": "performance",
+        "type": "string",
+        "required": false,
+        "description": "Optional performance family hint for the VM instance type (e.g., 'u1' for general-purpose, 'o1' for overcommitted, 'c1' for compute-optimized, 'm1' for memory-optimized). Defaults to 'u1' (general-purpose) if not specified."
+      },
+      {
+        "name": "preference",
+        "type": "string",
+        "required": false,
+        "description": "Optional preference name for the VM"
+      },
+      {
+        "name": "size",
+        "type": "string",
+        "required": false,
+        "description": "Optional workload size hint for the VM (e.g., 'small', 'medium', 'large', 'xlarge'). Used to auto-select an appropriate instance type if not explicitly specified."
+      },
+      {
+        "name": "storage",
+        "type": "string",
+        "required": false,
+        "description": "Optional storage size for the VM's root disk when using DataSources (e.g., '30Gi', '50Gi', '100Gi'). Defaults to 30Gi. Ignored when using container disks."
+      },
+      {
+        "name": "workload",
+        "type": "string",
+        "required": false,
+        "description": "The workload for the VM. Accepts OS names (e.g., 'fedora' (default), 'ubuntu', 'centos', 'centos-stream', 'debian', 'rhel', 'opensuse', 'opensuse-tumbleweed', 'opensuse-leap') or full container disk image URLs"
+      }
+    ]
+  },
+  {
+    "name": "vm_guest_info",
+    "description": "Get guest operating system information from a VirtualMachine's QEMU guest agent. Requires the guest agent to be installed and running inside the VM. Provides detailed information about the OS, filesystems, network interfaces, and logged-in users.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "info_type",
+        "type": "string",
+        "required": false,
+        "description": "Type of information to retrieve: 'all' (default - all available info), 'os' (operating system details), 'filesystem' (disk and filesystem info), 'users' (logged-in users), 'network' (network interfaces and IPs)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the virtual machine"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace of the virtual machine"
+      }
+    ]
+  },
+  {
+    "name": "vm_lifecycle",
+    "description": "Manage KubeVirt VirtualMachine lifecycle: start, stop, restart, pause, or unpause a VM",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "description": "The lifecycle action to perform: 'start' (changes runStrategy to Always), 'stop' (changes runStrategy to Halted), 'restart' (stops then starts the VM), 'pause' (suspends the running VMI in-place), or 'unpause' (resumes a paused VMI)"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the virtual machine"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace of the virtual machine"
+      }
+    ]
+  },
+  {
+    "name": "vm_create_from_template",
+    "description": "Create a VirtualMachine from a VirtualMachineTemplate (virt-template) on KubeVirt. Processes the template server-side to substitute parameters (required values, defaults, and auto-generated values like passwords), then creates the resulting VirtualMachine in the same namespace. Cross-namespace template usage is not supported.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace of the VirtualMachineTemplate and the resulting VirtualMachine (must be the same)"
+      },
+      {
+        "name": "parameters",
+        "type": "object",
+        "required": false,
+        "description": "Parameter values to substitute in the template. Keys are parameter names (e.g. VM_NAME), values are strings. Required parameters must be provided; optional parameters use their defaults if omitted; parameters with generate/from will be auto-generated if not provided."
+      },
+      {
+        "name": "template_name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the VirtualMachineTemplate to create the VM from"
+      }
+    ]
+  },
+  {
+    "name": "vm_troubleshoot",
+    "description": "Diagnose KubeVirt VirtualMachine issues with automated root-cause detection. Collects VM status, VMI status, volumes, DataVolume/PVC state, cloud-init configuration, pod state, logs, and events, then runs heuristic checks to identify specific problems and suggest fixes. Returns a 'Detected Issues' section with CRITICAL/WARNING findings and actionable remediation steps, followed by raw diagnostic data. Use this tool FIRST whenever a user asks why a VM is not starting, stuck in Provisioning, crashlooping, failing to migrate, or exhibiting unexpected behavior. Automatically detects: missing StorageClasses, invalid PVC specs, dangerous cloud-init commands (shutdown/halt), nodeSelector migration blockers, failed migrations, and pod crashloops. If the user asks to fix or remediate the issue, use the Suggested Fixes from the report with vm_lifecycle (restart) or resources_create_or_update.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The name of the VirtualMachine to troubleshoot"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": true,
+        "description": "The namespace of the VirtualMachine to troubleshoot"
+      }
+    ]
+  },
+  {
+    "name": "netobserv_list_flows",
+    "description": "Lists NetObserv network flow records from Loki. Use when investigating traffic between workloads, IPs, ports, or protocols in a namespace or time window.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "endTime",
+        "type": "integer",
+        "required": false,
+        "description": "End of time range as Unix epoch seconds. Defaults to now."
+      },
+      {
+        "name": "filters",
+        "type": "string",
+        "required": false,
+        "description": "NetObserv filter expression passed to the console plugin (plain text; the client URL-encodes it)."
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of flow records to return. Default 100."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Restrict results to flows where source or destination namespace matches (dev-scoped Loki tenant)."
+      },
+      {
+        "name": "packetLoss",
+        "type": "string",
+        "required": false,
+        "description": "Packet loss filter."
+      },
+      {
+        "name": "recordType",
+        "type": "string",
+        "required": false,
+        "description": "Flow record type filter."
+      },
+      {
+        "name": "startTime",
+        "type": "integer",
+        "required": false,
+        "description": "Start of time range as Unix epoch seconds. Overrides timeRange when set."
+      },
+      {
+        "name": "timeRange",
+        "type": "integer",
+        "required": false,
+        "description": "Lookback window in seconds when startTime is omitted. Default 300."
+      }
+    ]
+  },
+  {
+    "name": "netobserv_get_flow_metrics",
+    "description": "Returns aggregated NetObserv flow metrics as topology or time-series data. Use for throughput, TLS/DNS/drop breakdowns, and namespace or workload traffic analysis; see aggregateBy and groups for grouping options.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "aggregateBy",
+        "type": "string",
+        "required": true,
+        "description": "Primary dimension for netobserv_get_flow_metrics (console plugin /api/flow/metrics)."
+      },
+      {
+        "name": "dataSource",
+        "type": "string",
+        "required": false,
+        "description": "Metrics backend: auto (prefer Prometheus, fallback to Loki), prom, or loki."
+      },
+      {
+        "name": "endTime",
+        "type": "integer",
+        "required": false,
+        "description": "End of time range as Unix epoch seconds. Defaults to now."
+      },
+      {
+        "name": "filters",
+        "type": "string",
+        "required": false,
+        "description": "NetObserv filter expression passed to the console plugin (plain text; the client URL-encodes it)."
+      },
+      {
+        "name": "function",
+        "type": "string",
+        "required": false,
+        "description": "Aggregation function."
+      },
+      {
+        "name": "groups",
+        "type": "string",
+        "required": false,
+        "description": "Optional comma-separated parent scopes when aggregateBy is a topology scope."
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of flow records to return. Default 100."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Restrict results to flows where source or destination namespace matches (dev-scoped Loki tenant)."
+      },
+      {
+        "name": "packetLoss",
+        "type": "string",
+        "required": false,
+        "description": "Packet loss filter."
+      },
+      {
+        "name": "rateInterval",
+        "type": "string",
+        "required": false,
+        "description": "Prometheus rate interval (e.g. 1m, 5m)."
+      },
+      {
+        "name": "recordType",
+        "type": "string",
+        "required": false,
+        "description": "Flow record type filter."
+      },
+      {
+        "name": "startTime",
+        "type": "integer",
+        "required": false,
+        "description": "Start of time range as Unix epoch seconds. Overrides timeRange when set."
+      },
+      {
+        "name": "step",
+        "type": "string",
+        "required": false,
+        "description": "Query resolution step (e.g. 30s, 1m)."
+      },
+      {
+        "name": "timeRange",
+        "type": "integer",
+        "required": false,
+        "description": "Lookback window in seconds when startTime is omitted. Default 300."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "required": false,
+        "description": "Metric type to aggregate."
+      }
+    ]
+  },
+  {
+    "name": "netobserv_export_flows",
+    "description": "Exports NetObserv flow records as CSV with the same filters as list_flows. Use when the user needs downloadable flow data for audits or offline analysis.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "columns",
+        "type": "string",
+        "required": false,
+        "description": "Optional comma-separated column names to include (e.g. SrcK8S_Namespace,DstK8S_Namespace,Bytes). Omit to export all columns present in the result."
+      },
+      {
+        "name": "endTime",
+        "type": "integer",
+        "required": false,
+        "description": "End of time range as Unix epoch seconds. Defaults to now."
+      },
+      {
+        "name": "filters",
+        "type": "string",
+        "required": false,
+        "description": "NetObserv filter expression passed to the console plugin (plain text; the client URL-encodes it)."
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "required": false,
+        "description": "Export format. Only csv is supported."
+      },
+      {
+        "name": "limit",
+        "type": "integer",
+        "required": false,
+        "description": "Maximum number of flow records to return. Default 100."
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Restrict results to flows where source or destination namespace matches (dev-scoped Loki tenant)."
+      },
+      {
+        "name": "packetLoss",
+        "type": "string",
+        "required": false,
+        "description": "Packet loss filter."
+      },
+      {
+        "name": "recordType",
+        "type": "string",
+        "required": false,
+        "description": "Flow record type filter."
+      },
+      {
+        "name": "startTime",
+        "type": "integer",
+        "required": false,
+        "description": "Start of time range as Unix epoch seconds. Overrides timeRange when set."
+      },
+      {
+        "name": "timeRange",
+        "type": "integer",
+        "required": false,
+        "description": "Lookback window in seconds when startTime is omitted. Default 300."
+      }
+    ]
+  },
+  {
+    "name": "tekton_pipeline_start",
+    "description": "Start a Tekton Pipeline by creating a PipelineRun that references it",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the Pipeline to start"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace of the Pipeline"
+      },
+      {
+        "name": "params",
+        "type": "object",
+        "required": false,
+        "description": "Parameter values to pass to the Pipeline. Keys are parameter names; values can be a string, an array of strings, or an object (map of string to string) depending on the parameter type defined in the Pipeline spec"
+      }
+    ]
+  },
+  {
+    "name": "tekton_pipelinerun_lifecycle",
+    "description": "Manage a Tekton PipelineRun lifecycle by restarting it with the same spec or cancelling it by setting spec.status to Cancelled.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "description": "Lifecycle action to perform: 'restart' creates a new PipelineRun with the same spec; 'cancel' sets spec.status to Cancelled."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the PipelineRun to manage"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace of the PipelineRun"
+      }
+    ]
+  },
+  {
+    "name": "tekton_pipelinerun_logs",
+    "description": "Get logs for all TaskRuns owned by a Tekton PipelineRun. Use this to inspect PipelineRun execution output without locating pods manually.",
+    "source": "containers/kubernetes-mcp-server",
+    "oauth_scopes": [],
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the PipelineRun to get logs from"
+      },
+      {
+        "name": "namespace",
+        "type": "string",
+        "required": false,
+        "description": "Namespace of the PipelineRun"
+      },
+      {
+        "name": "step",
+        "type": "string",
+        "required": false,
+        "description": "Step name to include within matching TaskRuns"
+      },
+      {
+        "name": "tail",
+        "type": "integer",
+        "required": false,
+        "description": "Number of lines to retrieve from the end of each container log (default: 100)"
+      },
+      {
+        "name": "task",
+        "type": "string",
+        "required": false,
+        "description": "Pipeline task name to filter by (tekton.dev/pipelineTask label)"
+      }
+    ]
+  }
+]

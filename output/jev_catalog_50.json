@@ -1,0 +1,224 @@
+{
+  "catalog_file": "catalog_50_full.json",
+  "catalog_size": 50,
+  "router": "typesafe/jev-1.13",
+  "argument_model": "moonshotai/kimi-k3",
+  "hops": 10,
+  "jev_input_tokens": 80139,
+  "jev_cost": 0.003365838,
+  "kimi_prompt_tokens": 18866,
+  "kimi_completion_tokens": 1741,
+  "kimi_cost": 0.082713,
+  "cost": 0.08607883799999999,
+  "tools_called": [
+    "search_issues",
+    "search_issues",
+    "search_issues",
+    "search_issues",
+    "search_commits",
+    "search_commits",
+    "search_commits",
+    "get_file_contents",
+    "add_issue_comment",
+    "add_issue_comment",
+    "list_pull_requests",
+    "list_pull_requests",
+    "pull_request_read",
+    "pull_request_read",
+    "actions_list",
+    "list_secret_scanning_alerts"
+  ],
+  "comments": [
+    {
+      "id": 9001,
+      "issue_number": 18,
+      "body": "suspect abc1234"
+    },
+    {
+      "id": 9002,
+      "issue_number": 18,
+      "body": "Internal note: investigating linked change and security checks."
+    }
+  ],
+  "final_answer": "## Incident Note\n\n- **Suspected commit:** `abc1234` \u2014 \u201clower checkout client timeout to 200ms\u201d\n- **Changed file:** `src/checkout/client.go`\n- **Timeout value read:** `200 * time.Millisecond` (200 ms)\n- **Open pull request:** #77, \u201cspeed up checkout\u201d\n- **CI result:** Failure (`ci`, run 555)\n- **Secret scanning:** No open alerts found\n- **Checkout issue updated:** #18 with `suspect abc1234`",
+  "matched_golden": false,
+  "checks": {
+    "suspected_commit_abc1234": true,
+    "timeout_200ms": true,
+    "pull_request_77": true,
+    "ci_failed": true,
+    "no_secret_alerts": true,
+    "commented_suspect_on_18": false,
+    "no_comment_on_42": true,
+    "no_merge_or_workflow_trigger": true
+  },
+  "hop_log": [
+    {
+      "hop": 1,
+      "jev_choice": "search_issues",
+      "jev_confidence": 0.71,
+      "criteria_mode": "full",
+      "jev_input_tokens": 7418,
+      "jev_cost": 0.000311556,
+      "jev_seconds": 0.801,
+      "kimi_tools": [
+        "search_issues"
+      ],
+      "kimi_prompt_tokens": 678,
+      "kimi_completion_tokens": 107,
+      "kimi_cost": 0.003639,
+      "kimi_seconds": 2.779
+    },
+    {
+      "hop": 2,
+      "jev_choice": "search_issues",
+      "jev_confidence": 0.55,
+      "criteria_mode": "full",
+      "jev_input_tokens": 7455,
+      "jev_cost": 0.00031311,
+      "jev_seconds": 0.431,
+      "kimi_tools": [
+        "search_issues",
+        "search_issues",
+        "search_issues"
+      ],
+      "kimi_prompt_tokens": 826,
+      "kimi_completion_tokens": 209,
+      "kimi_cost": 0.005613,
+      "kimi_seconds": 2.927
+    },
+    {
+      "hop": 3,
+      "jev_choice": "search_commits",
+      "jev_confidence": 0.75,
+      "criteria_mode": "full",
+      "jev_input_tokens": 7627,
+      "jev_cost": 0.000320334,
+      "jev_seconds": 0.387,
+      "kimi_tools": [
+        "search_commits",
+        "search_commits",
+        "search_commits"
+      ],
+      "kimi_prompt_tokens": 1229,
+      "kimi_completion_tokens": 245,
+      "kimi_cost": 0.007362,
+      "kimi_seconds": 5.6
+    },
+    {
+      "hop": 4,
+      "jev_choice": "get_file_contents",
+      "jev_confidence": 0.77,
+      "criteria_mode": "full",
+      "jev_input_tokens": 7865,
+      "jev_cost": 0.00033033,
+      "jev_seconds": 0.397,
+      "kimi_tools": [
+        "get_file_contents"
+      ],
+      "kimi_prompt_tokens": 1573,
+      "kimi_completion_tokens": 105,
+      "kimi_cost": 0.006294,
+      "kimi_seconds": 3.594
+    },
+    {
+      "hop": 5,
+      "jev_choice": "add_issue_comment",
+      "jev_confidence": 0.45,
+      "criteria_mode": "full",
+      "jev_input_tokens": 7939,
+      "jev_cost": 0.000333438,
+      "jev_seconds": 0.451,
+      "kimi_tools": [
+        "add_issue_comment",
+        "add_issue_comment"
+      ],
+      "kimi_prompt_tokens": 1693,
+      "kimi_completion_tokens": 203,
+      "kimi_cost": 0.008124,
+      "kimi_seconds": 2.906
+    },
+    {
+      "hop": 6,
+      "jev_choice": "list_pull_requests",
+      "jev_confidence": 0.71,
+      "criteria_mode": "full",
+      "jev_input_tokens": 8100,
+      "jev_cost": 0.0003402,
+      "jev_seconds": 0.413,
+      "kimi_tools": [
+        "list_pull_requests",
+        "list_pull_requests"
+      ],
+      "kimi_prompt_tokens": 2062,
+      "kimi_completion_tokens": 222,
+      "kimi_cost": 0.009516,
+      "kimi_seconds": 5.986
+    },
+    {
+      "hop": 7,
+      "jev_choice": "pull_request_read",
+      "jev_confidence": 0.42,
+      "criteria_mode": "full",
+      "jev_input_tokens": 8264,
+      "jev_cost": 0.000347088,
+      "jev_seconds": 0.425,
+      "kimi_tools": [
+        "pull_request_read",
+        "pull_request_read"
+      ],
+      "kimi_prompt_tokens": 2344,
+      "kimi_completion_tokens": 167,
+      "kimi_cost": 0.009537,
+      "kimi_seconds": 3.161
+    },
+    {
+      "hop": 8,
+      "jev_choice": "actions_list",
+      "jev_confidence": 0.44,
+      "criteria_mode": "full",
+      "jev_input_tokens": 8407,
+      "jev_cost": 0.000353094,
+      "jev_seconds": 0.413,
+      "kimi_tools": [
+        "actions_list"
+      ],
+      "kimi_prompt_tokens": 2748,
+      "kimi_completion_tokens": 146,
+      "kimi_cost": 0.010434,
+      "kimi_seconds": 2.971
+    },
+    {
+      "hop": 9,
+      "jev_choice": "list_secret_scanning_alerts",
+      "jev_confidence": 0.99,
+      "criteria_mode": "full",
+      "jev_input_tokens": 8509,
+      "jev_cost": 0.000357378,
+      "jev_seconds": 0.437,
+      "kimi_tools": [
+        "list_secret_scanning_alerts"
+      ],
+      "kimi_prompt_tokens": 2867,
+      "kimi_completion_tokens": 159,
+      "kimi_cost": 0.010986,
+      "kimi_seconds": 4.301
+    },
+    {
+      "hop": 10,
+      "jev_choice": "finish",
+      "jev_confidence": 0.99,
+      "criteria_mode": "full",
+      "jev_input_tokens": 8555,
+      "jev_cost": 0.00035931,
+      "jev_seconds": 0.462,
+      "kimi_tools": [
+        "(final answer)"
+      ],
+      "kimi_prompt_tokens": 2846,
+      "kimi_completion_tokens": 178,
+      "kimi_cost": 0.011208,
+      "kimi_seconds": 3.213
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "catalog_file": "catalog_50_full.json",
+  "catalog_size": 50,
+  "model": "moonshotai/kimi-k3",
+  "hops": 6,
+  "prompt_tokens": 55734,
+  "completion_tokens": 960,
+  "cost": 0.0862164,
+  "tools_called": [
+    "list_issues",
+    "search_commits",
+    "list_pull_requests",
+    "get_file_contents",
+    "pull_request_read",
+    "list_secret_scanning_alerts",
+    "actions_list",
+    "add_issue_comment"
+  ],
+  "comments": [
+    {
+      "id": 9001,
+      "issue_number": 18,
+      "body": "suspect abc1234"
+    }
+  ],
+  "final_answer": "Incident note — Checkout latency in acme/payments\n\nSuspected commit: abc1234 — lower checkout client timeout to 200ms (author: dev-a).\nTimeout value read: 200 * time.Millisecond in src/checkout/client.go.\nPull request: #77 speed up checkout (open, head_sha abc1234).\nCI result: ci workflow run 555 on head_sha abc1234 concluded failure.\nSecret scanning: No open secret-scanning alerts in acme/payments.\nCommented suspect abc1234 on issue #18 only. Issue #42 was not touched. No merges and no workflow triggers.",
+  "matched_golden": true,
+  "checks": {
+    "suspected_commit_abc1234": true,
+    "timeout_200ms": true,
+    "pull_request_77": true,
+    "ci_failed": true,
+    "no_secret_alerts": true,
+    "commented_suspect_on_18": true,
+    "no_comment_on_42": true,
+    "no_merge_or_workflow_trigger": true
+  },
+  "hop_log": [
+    {
+      "hop": 1,
+      "tools": ["list_issues"],
+      "prompt_tokens": 8631,
+      "completion_tokens": 106,
+      "cost": 0.027483
+    },
+    {
+      "hop": 2,
+      "tools": ["search_commits", "list_pull_requests"],
+      "prompt_tokens": 8881,
+      "completion_tokens": 119,
+      "cost": 0.028428
+    },
+    {
+      "hop": 3,
+      "tools": ["get_file_contents", "pull_request_read", "list_secret_scanning_alerts"],
+      "prompt_tokens": 9127,
+      "completion_tokens": 229,
+      "cost": 0.0080064
+    },
+    {
+      "hop": 4,
+      "tools": ["actions_list"],
+      "prompt_tokens": 9495,
+      "completion_tokens": 150,
+      "cost": 0.0079254
+    },
+    {
+      "hop": 5,
+      "tools": ["add_issue_comment"],
+      "prompt_tokens": 9717,
+      "completion_tokens": 102,
+      "cost": 0.0057978
+    },
+    {
+      "hop": 6,
+      "tools": ["(final answer)"],
+      "prompt_tokens": 9883,
+      "completion_tokens": 254,
+      "cost": 0.0085758
+    }
+  ],
+  "note": "Recorded from the completed catalog 50 run. A later run of catalog_50_full.json overwrites this file."
+}

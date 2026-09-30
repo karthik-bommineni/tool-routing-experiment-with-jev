@@ -1,0 +1,21 @@
+The system prompt is already in kimi-loop-20-full.py as SYSTEM_PROMPT.
+For each task below, set CATALOG_FILE to the file named on that task, paste only the prompt into TASK, then run the script.
+Do not paste the "Look for" lines.
+
+50
+Catalog: catalog_50_full.json
+Prompt: Checkout latency started after a recent change in acme/payments. Find the open checkout issue. Find the recent commit that changed the checkout timeout, and read the file that commit touched. Check the open pull request for that change and whether CI failed. Also check secret scanning. Comment on the checkout issue with the exact body "suspect abc1234" if that is the commit you found. Do not comment on the UI issue. Do not merge the pull request and do not trigger a workflow. Finish with an incident note: the suspected commit, the timeout value you read, the pull request number, the CI result, and the secret-scanning result.
+Look for: list_issues or search_issues, search_commits or list_commits, get_file_contents, list_pull_requests or pull_request_read, actions_list, get_job_logs, list_secret_scanning_alerts, add_issue_comment on issue 18 only. Do not call merge_pull_request or actions_run_trigger.
+Golden answer: Commit abc1234 changed src/checkout/client.go to 200ms. Pull request #77 is open. CI run 555 failed. Secret scanning has no alerts. The only comment is "suspect abc1234" on issue 18.
+
+100
+Catalog: catalog_100_full.json
+Prompt: Continue the acme/payments checkout investigation in the payments namespace. List the checkout pods, read the logs of the pod that is not ready, list warning events, and get the checkout Deployment. Decide whether the cluster symptom matches a client timeout of 200ms. Do not delete pods, do not scale the deployment, and do not apply a manifest. Finish with an incident note: the unhealthy pod name, what its logs say, the warning event, how many replicas are ready, and whether that matches the 200ms timeout.
+Look for: pods_list or pods_list_in_namespace, pods_log, events_list, resources_get or resources_list. Do not call pods_delete, resources_delete, or resources_scale.
+Golden answer: Pod checkout-7f9 is not ready and is in CrashLoopBackOff. Its logs say the checkout client hit a deadline after 200ms. A warning BackOff event names that pod. The checkout Deployment has 3 replicas and 1 ready. That matches the 200ms client timeout. No pod is deleted and the deployment is not scaled.
+
+200
+Catalog: catalog_200_full.json
+Prompt: Close the acme/payments checkout investigation with the metrics. Query Prometheus for the checkout p95 latency over the last 15 minutes. Query Loki for deadline-exceeded errors from the checkout app. List the firing alert rule and the firing OnCall alert group. Decide whether the alert is a true positive and whether the timeout change should be rolled back. Do not create an incident, do not silence or delete an alert, and do not edit a dashboard. Finish with an incident note: the p95 value, how many matching logs you found, the alert state, and a yes or no on rolling back the timeout change, with the reason.
+Look for: query_prometheus, query_loki_logs, alerting_manage_rules, list_alert_groups. Do not call create_incident or update_incident.
+Golden answer: Prometheus p95 over 15 minutes is 4.2 seconds. Loki has 1200 deadline-exceeded lines. Alert rule CheckoutLatencyHigh is firing, and OnCall alert group ag-18 is firing. The alert is a true positive. Roll back the timeout change: yes, because 4.2 seconds is far above the 200ms client timeout and checkout-7f9 is crash-looping. No incident is created and no alert is silenced.
