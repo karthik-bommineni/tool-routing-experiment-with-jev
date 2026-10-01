@@ -14,3 +14,8 @@ wheels/
 
 # Unnecessary files
 idea.md
+
+# Embedding experiment WIP (paused)
+output/embeddings/
+output/embed_catalog_*.json
+embed-kimi-loop.py
