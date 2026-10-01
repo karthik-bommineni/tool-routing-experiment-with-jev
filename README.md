@@ -98,6 +98,6 @@ output/            # recorded run JSON
 sample-dry-runs/   # early single-call samples
 ```
 
-## Next
+## What's Next
 
 Embedding router (nearest-neighbor over tool descriptions) is paused. Planned as experiment 3 with the same tasks, catalogs, fakes, and golden checks.
