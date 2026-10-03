@@ -14,6 +14,8 @@ wheels/
 
 # Unnecessary files
 idea.md
+blog.txt
+blog.md
 
 # Embedding experiment WIP (paused)
 output/embeddings/

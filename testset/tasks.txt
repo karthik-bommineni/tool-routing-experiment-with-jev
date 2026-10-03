@@ -1,5 +1,5 @@
-The system prompt is already in kimi-loop-20-full.py as SYSTEM_PROMPT.
-For each task below, set CATALOG_FILE to the file named on that task, paste only the prompt into TASK, then run the script.
+For each task below, set CATALOG_FILE to the file named on that task, paste only the prompt into TASK, then run kimi-loop-full.py or jev-kimi-loop.py.
+For Astra, use astra-loop-50.py / astra-loop-100.py / astra-loop-200.py (prompts are already wired in).
 Do not paste the "Look for" lines.
 
 50

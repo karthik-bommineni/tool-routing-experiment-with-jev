@@ -1,0 +1,85 @@
+{
+  "catalog_file": "catalog_50_full.json",
+  "catalog_size": 50,
+  "model": "openai/gpt-6-astra",
+  "hops": 4,
+  "prompt_tokens": 27638,
+  "completion_tokens": 641,
+  "cost": 0.14398750000000002,
+  "tools_called": [
+    "search_issues",
+    "search_commits",
+    "list_pull_requests",
+    "list_secret_scanning_alerts",
+    "list_issues",
+    "get_commit",
+    "get_file_contents",
+    "pull_request_read",
+    "actions_list",
+    "add_issue_comment"
+  ],
+  "comments": [
+    {
+      "id": 9001,
+      "issue_number": 18,
+      "body": "suspect abc1234"
+    }
+  ],
+  "final_answer": "## Incident note\n\n- **Checkout issue:** #18 \u2014 \u201cCheckout times out under load.\u201d\n- **Suspected commit:** `abc1234` \u2014 \u201clower checkout client timeout to 200ms.\u201d\n- **Timeout read:** `200 * time.Millisecond` in `src/checkout/client.go` at that commit.\n- **Open pull request:** #77 \u2014 \u201cspeed up checkout,\u201d with head `abc1234`.\n- **CI result:** `ci` run **555** reported **failure** for `abc1234`.\n- **Secret scanning:** No open alerts returned.\n\nAdded the exact comment `suspect abc1234` to issue #18. Did not comment on UI issue #42, merge the pull request, or trigger a workflow.\n\nThe timeout change is a suspect, not yet a confirmed cause of the latency.",
+  "matched_golden": true,
+  "checks": {
+    "suspected_commit_abc1234": true,
+    "timeout_200ms": true,
+    "pull_request_77": true,
+    "ci_failed": true,
+    "no_secret_alerts": true,
+    "commented_suspect_on_18": true,
+    "no_comment_on_42": true,
+    "no_merge_or_workflow_trigger": true
+  },
+  "hop_log": [
+    {
+      "hop": 1,
+      "tools": [
+        "search_issues",
+        "search_commits",
+        "list_pull_requests",
+        "list_secret_scanning_alerts"
+      ],
+      "prompt_tokens": 6364,
+      "completion_tokens": 210,
+      "cost": 0.0900425
+    },
+    {
+      "hop": 2,
+      "tools": [
+        "list_issues",
+        "get_commit",
+        "get_file_contents",
+        "pull_request_read",
+        "actions_list"
+      ],
+      "prompt_tokens": 6714,
+      "completion_tokens": 215,
+      "cost": 0.021516
+    },
+    {
+      "hop": 3,
+      "tools": [
+        "add_issue_comment"
+      ],
+      "prompt_tokens": 7236,
+      "completion_tokens": 44,
+      "cost": 0.015466
+    },
+    {
+      "hop": 4,
+      "tools": [
+        "(final answer)"
+      ],
+      "prompt_tokens": 7324,
+      "completion_tokens": 172,
+      "cost": 0.016963
+    }
+  ]
+}
